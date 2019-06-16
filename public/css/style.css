@@ -1,0 +1,30 @@
+.logo>img {
+  margin-top: 8em;
+  width: 50%;
+}
+
+.search-bar {
+    margin-top: 2em;
+}
+
+.media-content {
+    margin-top: 5em;
+}
+
+.embed-responsive-16by9 {
+  border-radius: 4px 4px 0 0;
+}
+
+#video-description {
+  border-radius: 0 0 4px 4px;
+  border-top: none;
+}
+
+.video-item {
+  cursor: pointer;
+}
+
+.video-item>img {
+  border-radius: 4px;
+  margin-bottom: 1em;
+}
