@@ -10,9 +10,7 @@ class App extends React.Component {
     images: [],
     videos: [],
     selectedVideo: null,
-    category: 'images',
-    showImages: false,
-    showVideos: false
+    category: 'images'
   };
 
   onVideoSelect = (video) => {
@@ -20,6 +18,9 @@ class App extends React.Component {
   }
 
   onSearchSubmit = (term) => {
+    this.state.images = [];
+    this.state.videos = [];
+    this.state.selectedVideo = null;
     if (this.state.category === 'images') {
       axios.get('https://api.unsplash.com/search/photos', {
         params: { query: term},
@@ -27,11 +28,7 @@ class App extends React.Component {
           Authorization: 'Client-ID fb3ac573f554a021016313b7bb13ceb917b71684329cb43ee955faca2567ffff'
         }
       }).then((response) => {
-        this.setState({
-          images: response.data.results,
-          showImages: true,
-          showVideos: false
-        })
+        this.setState({images: response.data.results})
       }).catch((error) => {
         console.log(error);
       });
@@ -47,9 +44,7 @@ class App extends React.Component {
       }).then((response) => {
         this.setState({
           videos: response.data.items,
-          selectedVideo: response.data.items[0],
-          showImages: false,
-          showVideos: true
+          selectedVideo: response.data.items[0]
         })
       }).catch((error) => {
         console.log(error);
@@ -79,15 +74,13 @@ class App extends React.Component {
           </div>
         </div>
         <div className="row media-content">
-          <div className={this.state.showVideos ? '' : 'hide'}>
-            <div className="col-md-8">
-              <VideoDetail video={this.state.selectedVideo} />
-            </div>
-            <div className="col-md-4">
-              <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
-            </div>
+          <div className="col-md-8">
+            <VideoDetail video={this.state.selectedVideo} />
           </div>
-          <div className={`col-md-12 ${this.state.showImages ? '' : 'hide'}`}>
+          <div className="col-md-4">
+            <VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect}/>
+          </div>
+          <div className="col-md-12">
             <ImageList images={this.state.images}/>
           </div>
         </div>
